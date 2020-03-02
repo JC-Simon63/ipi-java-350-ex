@@ -85,7 +85,7 @@ public class EmployeTest {
             "'test', 2, 1.0, 2500d",
             "'Mtest', 1, 0, 0d"
     })
-    public void getPrimeAnnuellePourManagerParamTest (String matricule, Integer performance, Double tempsPartiel, Double result) {
+    public void testgetPrimeAnnuelle (String matricule, Integer performance, Double tempsPartiel, Double result) {
         Employe employe = new Employe();
         employe.setDateEmbauche(LocalDate.now().minusYears(2));
         employe.setMatricule(matricule);
