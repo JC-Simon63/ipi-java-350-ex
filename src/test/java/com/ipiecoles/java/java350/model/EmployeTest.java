@@ -2,6 +2,8 @@ package com.ipiecoles.java.java350.model;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
@@ -73,22 +75,25 @@ public class EmployeTest {
     }
 
 
-    @Test
-    public void testgetPrimeAnnuelleMatriculeBeginWithMAndTempsPartiel1(){
-        double result;
-        double compare;
-
-//        Given employe
-        employe = new Employe();
+    @ParameterizedTest(name = "Matricule : {0}, performance : {1}, tempsPartiel : {2}, Le resultat devrait être : {3}")
+    @CsvSource({
+            "'Mtest', 1, 1.0, 1900d",
+            "'test', 1, 1.0, 1200d",
+            ", 1, 1.0, 1200d",
+            "'test', , 1.0, 1200d",
+            "'test', 0, 1.0, 500d",
+            "'test', 2, 1.0, 2500d",
+            "'Mtest', 1, 0, 0d"
+    })
+    public void getPrimeAnnuellePourManagerParamTest (String matricule, Integer performance, Double tempsPartiel, Double result) {
+        Employe employe = new Employe();
         employe.setDateEmbauche(LocalDate.now().minusYears(2));
-
-//        When Matricule begin with M and Temps partiel is 1.0
-        employe.setMatricule("M00001");
-        employe.setTempsPartiel(1.0);
-        compare = (Entreprise.primeAnnuelleBase() * Entreprise.INDICE_PRIME_MANAGER + Entreprise.PRIME_ANCIENNETE * employe.getNombreAnneeAnciennete()) * employe.getTempsPartiel();
-        result = employe.getPrimeAnnuelle();
-
-//        Then return 0
-        Assertions.assertThat(result).isEqualTo(compare);
+        employe.setMatricule(matricule);
+        employe.setPerformance(performance);
+        employe.setTempsPartiel(tempsPartiel);
+        Double Prime = employe.getPrimeAnnuelle();
+        Assertions.assertThat(Prime).isEqualTo(result);
     }
+
+
 }
