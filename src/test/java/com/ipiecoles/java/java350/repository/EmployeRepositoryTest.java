@@ -14,6 +14,7 @@ import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.Arrays;
 
+@SuppressWarnings("CheckStyle")
 @ExtendWith(SpringExtension.class) //Junit 5
 @SpringBootTest //ou @DataJpaTest
 public class EmployeRepositoryTest {
