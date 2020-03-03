@@ -15,7 +15,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 
 @ExtendWith(SpringExtension.class) //Junit 5
-@SpringBootTest
+@SpringBootTest //ou @DataJpaTest
 public class EmployeRepositoryTest {
 
     @Autowired
