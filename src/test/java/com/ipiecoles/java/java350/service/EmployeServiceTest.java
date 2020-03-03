@@ -73,7 +73,7 @@ public class EmployeServiceTest {
 
         // when
         Throwable thrown = catchThrowable(() -> employeService.embaucheEmploye(nom, prenom,poste,niveauEtude,tempsPartiel));
-        // THEN
+        // then
         Assertions.assertThat(thrown).isInstanceOf(EmployeException.class)
                 .hasMessageContaining("Limite des 100000 matricules atteinte !");
     }
