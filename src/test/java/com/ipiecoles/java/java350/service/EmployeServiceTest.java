@@ -33,7 +33,7 @@ public class EmployeServiceTest {
     }
 
     @Test
-    public void testEmbaucheEmployeSave() throws EmployeException{
+    public void testEmbaucheEmployeTechTempsPlein() throws EmployeException{
         // given
         String nom = "Doe";
         String prenom = "Jane";
@@ -59,6 +59,36 @@ public class EmployeServiceTest {
         Assertions.assertThat(e1.getMatricule()).isEqualTo("T00346");
         // 1521.22 * 1.2
         Assertions.assertThat(e1.getSalaire()).isEqualTo(1825.46);
+
+    }
+
+    @Test
+    public void testEmbaucheEmployeTechTempsPartiel() throws EmployeException{
+        // given
+        String nom = "Doe";
+        String prenom = "Jane";
+        Poste poste = Poste.TECHNICIEN;
+        NiveauEtude niveauEtude = NiveauEtude.BTS_IUT;
+        Double tempsPartiel = 0.5;
+
+        Mockito.when(employeRepository.findLastMatricule()).thenReturn("00345");
+        Mockito.when(employeRepository.findByMatricule("T00346")).thenReturn(null);
+
+        // when
+        employeService.embaucheEmploye(nom, prenom,poste,niveauEtude,tempsPartiel);
+
+        // then
+        Mockito.verify(employeRepository).findByMatricule("T00346");
+        ArgumentCaptor<Employe> employeCaptor = ArgumentCaptor.forClass(Employe.class);
+        Mockito.verify(employeRepository, Mockito.times(1)).save(employeCaptor.capture());
+        Employe e1 = employeCaptor.getValue();
+        Assertions.assertThat(e1.getNom()).isEqualTo(nom);
+        Assertions.assertThat(e1.getPrenom()).isEqualTo(prenom);
+        Assertions.assertThat(e1.getDateEmbauche()).isEqualTo(LocalDate.now());
+        Assertions.assertThat(e1.getPerformance()).isEqualTo(Entreprise.PERFORMANCE_BASE);
+        Assertions.assertThat(e1.getMatricule()).isEqualTo("T00346");
+        // 1521.22 * 1.2
+        Assertions.assertThat(e1.getSalaire()).isEqualTo(912.73);
 
     }
 
