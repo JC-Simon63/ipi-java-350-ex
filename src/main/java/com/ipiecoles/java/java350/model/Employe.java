@@ -105,9 +105,6 @@ public class Employe {
         return prime * this.tempsPartiel;
     }
 
-    //Augmenter salaire
-    //public void augmenterSalaire(double pourcentage){}
-
     public Long getId() {
         return id;
     }
