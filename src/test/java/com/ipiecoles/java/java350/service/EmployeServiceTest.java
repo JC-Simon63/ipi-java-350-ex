@@ -14,6 +14,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.time.LocalDate;
+
 import static org.assertj.core.api.Assertions.catchThrowable;
 
 @ExtendWith(MockitoExtension.class)
@@ -41,9 +44,17 @@ public class EmployeServiceTest {
         employeService.embaucheEmploye(nom, prenom,poste,niveauEtude,tempsPartiel);
 
         // then
+        Mockito.verify(employeRepository).findByMatricule("T00346");
         ArgumentCaptor<Employe> employeCaptor = ArgumentCaptor.forClass(Employe.class);
         Mockito.verify(employeRepository, Mockito.times(1)).save(employeCaptor.capture());
-        Assertions.assertThat(employeCaptor.getValue().getNom()).isEqualTo("Doe");
+        Employe e1 = employeCaptor.getValue();
+        Assertions.assertThat(e1.getNom()).isEqualTo(nom);
+        Assertions.assertThat(e1.getPrenom()).isEqualTo(prenom);
+        Assertions.assertThat(e1.getDateEmbauche()).isEqualTo(LocalDate.now());
+        Assertions.assertThat(e1.getPerformance()).isEqualTo(Entreprise.PERFORMANCE_BASE);
+        Assertions.assertThat(e1.getMatricule()).isEqualTo("T00346");
+        // 1521.22 * 1.2
+        Assertions.assertThat(e1.getSalaire()).isEqualTo(1825.46);
 
     }
 
