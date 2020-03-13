@@ -59,4 +59,16 @@ public class EmployeServiceIntegrationTest {
         Assertions.assertEquals(1825.46, employe.getSalaire().doubleValue());
     }
 
+    @Test
+    public void findEmployeGagnantMoinsQue() {
+        employeRepository.save(new Employe("Doe", "John", "T12345", LocalDate.now(), Entreprise.SALAIRE_BASE, 1, 1.0));
+        employeRepository.save(new Employe("Doe", "Jane", "T23456", LocalDate.now(), Entreprise.SALAIRE_BASE+1000, 1, 1.0));
+        employeRepository.save(new Employe("Doe", "Franck", "T34567", LocalDate.now(), Entreprise.SALAIRE_BASE-200, 1, 1.0));
+        Employe employe = employeRepository.findByMatricule("T34567");
+
+        List<Employe> employeList = employeService.findEmployeGagnantMoinsQue("T12345");
+        Assertions.assertTrue(employeList.size() == 1);
+        Assertions.assertEquals(employe, employeList.get(0));
+    }
+
 }

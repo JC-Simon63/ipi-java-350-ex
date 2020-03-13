@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class EmployeService {
@@ -37,7 +38,7 @@ public class EmployeService {
      * @throws EntityExistsException Si le matricule correspond à un employé existant
      */
     public void embaucheEmploye(String nom, String prenom, Poste poste, NiveauEtude niveauEtude, Double tempsPartiel) throws EmployeException, EntityExistsException {
-        logger.debug("Coucou");
+        logger.debug("Je suis un debug !");
         logger.info("Embauche de l'employé {} {} diplômé de {} en tant que {} avec un taux d'activité de {} ", prenom, nom, niveauEtude.name(), poste.name(), tempsPartiel);
 
         //Récupération du type d'employé à partir du poste
@@ -60,8 +61,8 @@ public class EmployeService {
 
         //On vérifie l'existence d'un employé avec ce matricule
         if(employeRepository.findByMatricule(matricule) != null){
-            logger.error("L'employé de matricule " + matricule + " existe déjà en BDD");
-            throw new EntityExistsException("L'employé de matricule " + matricule + " existe déjà en BDD");
+            logger.error("L'employé de matricule " + matricule + " existe déjà !");
+            throw new EntityExistsException("L'employé de matricule " + matricule + " existe déjà !");
         }
 
         //Calcul du salaire
@@ -142,5 +143,32 @@ public class EmployeService {
         //Affectation et sauvegarde
         employe.setPerformance(performance);
         employeRepository.save(employe);
+    }
+
+    public List<Employe> findEmployeGagnantMoinsQue(String matricule) {
+        return employeRepository.findEmployeGagnantMoinsQue(matricule);
+    }
+
+    /**
+     * Cette méthode calcule le salaire moyen de tous les employés ramené
+     * à un équivalent temps plein : Ex : Si un personne à mi-temps gagne 800 € son salaire ETP est 1600 €
+     */
+    public Double calculSalaireMoyenETP() throws Exception {
+        //On compte le nombre de salariés
+        Long nbEmployes = employeRepository.count();
+        if(nbEmployes == 0){
+            throw new Exception("Aucun employé, impossible de calculer le salaire moyen !");
+        }
+        //On récupère la somme des taux d'activité
+        Double smTxActivite = employeRepository.sumTempsPartiel();
+        if(smTxActivite > nbEmployes){
+            throw new Exception("Taux d'activité des employés incohérent !");
+        }
+
+        //On récupère la somme des salaires
+        Double smSalaire = employeRepository.sumSalaire();
+
+        //On calcul le salaire moyen par ETP
+        return Math.round(smSalaire * 100 / smTxActivite) / 100d;
     }
 }

@@ -1,0 +1,42 @@
+2020-03-12 10:00:57 - DEBUG - Coucou
+2020-03-12 10:00:57 - INFO  - Embauche de l'employé John Doe diplômé de BTS_IUT en tant que TECHNICIEN avec un taux d'activité de 1.0 
+2020-03-12 10:08:11 - DEBUG - Je suis un debug !
+2020-03-12 10:08:11 - INFO  - Embauche de l'employé John Doe diplômé de MASTER en tant que MANAGER avec un taux d'activité de 0.5 
+2020-03-12 10:08:11 - ERROR - L'employé de matricule M00001 existe déjà !
+2020-03-12 10:08:41 - DEBUG - Je suis un debug !
+2020-03-12 10:08:41 - INFO  - Embauche de l'employé John Doe diplômé de MASTER en tant que MANAGER avec un taux d'activité de 0.5 
+2020-03-12 10:08:41 - ERROR - L'employé de matricule M00001 existe déjà !
+2020-03-12 10:34:50 - DEBUG - Je suis un debug !
+2020-03-12 10:34:50 - INFO  - Embauche de l'employé John Doe diplômé de MASTER en tant que MANAGER avec un taux d'activité de 0.5 
+2020-03-12 10:34:50 - ERROR - L'employé de matricule M00001 existe déjà !
+2020-03-12 10:35:24 - DEBUG - Je suis un debug !
+2020-03-12 10:35:24 - INFO  - Embauche de l'employé John Doe diplômé de MASTER en tant que MANAGER avec un taux d'activité de 0.5 
+2020-03-12 10:35:24 - ERROR - L'employé de matricule M00001 existe déjà !
+2020-03-12 12:51:27 - INFO  - Starting EmployeServiceIntegrationTest on FR-L3356925 with PID 17944 (started by jean-christophe.simo in C:\GIT\ipi-java-350-ex)
+2020-03-12 12:51:27 - INFO  - No active profile set, falling back to default profiles: default
+2020-03-12 12:51:33 - INFO  - Started EmployeServiceIntegrationTest in 6.309 seconds (JVM running for 8.348)
+2020-03-12 12:51:33 - INFO  - Embauche de l'employé John Doe diplômé de BTS_IUT en tant que TECHNICIEN avec un taux d'activité de 1.0 
+2020-03-12 13:06:05 - INFO  - Starting EmployeServiceIntegrationTest on FR-L3356925 with PID 16236 (started by jean-christophe.simo in C:\GIT\ipi-java-350-ex)
+2020-03-12 13:06:05 - INFO  - No active profile set, falling back to default profiles: default
+2020-03-12 13:06:10 - INFO  - Started EmployeServiceIntegrationTest in 5.774 seconds (JVM running for 7.783)
+2020-03-12 13:07:40 - INFO  - Starting EmployeServiceIntegrationTest on FR-L3356925 with PID 15816 (started by jean-christophe.simo in C:\GIT\ipi-java-350-ex)
+2020-03-12 13:07:40 - INFO  - No active profile set, falling back to default profiles: default
+2020-03-12 13:07:45 - INFO  - Started EmployeServiceIntegrationTest in 6.221 seconds (JVM running for 8.299)
+2020-03-12 16:16:57 - INFO  - Starting EmployeControllerTest on FR-L3356925 with PID 6952 (started by jean-christophe.simo in C:\GIT\ipi-java-350-ex)
+2020-03-12 16:16:57 - INFO  - No active profile set, falling back to default profiles: default
+2020-03-12 16:17:01 - INFO  - Started EmployeControllerTest in 4.214 seconds (JVM running for 6.706)
+2020-03-12 16:18:22 - INFO  - Starting EmployeControllerTest on FR-L3356925 with PID 7404 (started by jean-christophe.simo in C:\GIT\ipi-java-350-ex)
+2020-03-12 16:18:22 - INFO  - No active profile set, falling back to default profiles: default
+2020-03-12 16:18:26 - INFO  - Started EmployeControllerTest in 4.016 seconds (JVM running for 6.687)
+2020-03-12 16:34:33 - INFO  - Starting EmployeControllerTest on FR-L3356925 with PID 6296 (started by jean-christophe.simo in C:\GIT\ipi-java-350-ex)
+2020-03-12 16:34:33 - INFO  - No active profile set, falling back to default profiles: default
+2020-03-12 16:34:36 - INFO  - Started EmployeControllerTest in 3.745 seconds (JVM running for 6.126)
+2020-03-12 16:48:32 - INFO  - Starting EmployeControllerTest on FR-L3356925 with PID 18264 (started by jean-christophe.simo in C:\GIT\ipi-java-350-ex)
+2020-03-12 16:48:32 - INFO  - No active profile set, falling back to default profiles: default
+2020-03-12 16:48:35 - INFO  - Started EmployeControllerTest in 3.629 seconds (JVM running for 5.849)
+2020-03-12 16:49:47 - INFO  - Starting EmployeControllerTest on FR-L3356925 with PID 16296 (started by jean-christophe.simo in C:\GIT\ipi-java-350-ex)
+2020-03-12 16:49:47 - INFO  - No active profile set, falling back to default profiles: default
+2020-03-12 16:49:51 - INFO  - Started EmployeControllerTest in 3.885 seconds (JVM running for 6.162)
+2020-03-12 16:50:35 - INFO  - Starting EmployeControllerTest on FR-L3356925 with PID 18908 (started by jean-christophe.simo in C:\GIT\ipi-java-350-ex)
+2020-03-12 16:50:35 - INFO  - No active profile set, falling back to default profiles: default
+2020-03-12 16:50:38 - INFO  - Started EmployeControllerTest in 3.984 seconds (JVM running for 6.293)

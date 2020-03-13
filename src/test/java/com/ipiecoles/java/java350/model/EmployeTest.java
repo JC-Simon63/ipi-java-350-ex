@@ -1,5 +1,6 @@
 package com.ipiecoles.java.java350.model;
 
+import com.ipiecoles.java.java350.exception.EmployeException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -82,6 +83,29 @@ public class EmployeTest {
 
         //Then
         Assertions.assertEquals(primeAnnuelle, prime);
+
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "1.0, 0.5, 760.61",
+            "0.5, 1.0, 3042.44",
+            "1.0, 0.0, 0.0",
+            "1.0, , 0.0"
+    })
+    public void setTempsPartiel( Double tempsPartiel, Double nvxTempsPartiel, Double nvxSalaire) throws EmployeException {
+
+        Employe employe = new Employe("Doe", "John", "T12345", LocalDate.now(), Entreprise.SALAIRE_BASE, 1, tempsPartiel);
+
+        if (nvxTempsPartiel != null && nvxTempsPartiel != 0.0 ){
+            employe.setTempsPartiel(nvxTempsPartiel);
+            Assertions.assertEquals(employe.getTempsPartiel(), nvxTempsPartiel);
+            Assertions.assertEquals(employe.getSalaire(), nvxSalaire);
+        } else {
+            EmployeException e = Assertions.assertThrows(EmployeException.class, () -> employe.setTempsPartiel(nvxTempsPartiel));
+            Assertions.assertEquals("Temps partiel ne peut être nul.", e.getMessage());
+        }
+
 
     }
 

@@ -9,10 +9,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import javax.persistence.EntityExistsException;
@@ -124,7 +121,7 @@ public class EmployeServiceTest {
 
         //When/Then
         EntityExistsException e = Assertions.assertThrows(EntityExistsException.class, () -> employeService.embaucheEmploye(nom, prenom, poste, niveauEtude, tempsPartiel));
-        Assertions.assertEquals("L'employé de matricule M00001 existe déjà en BDD", e.getMessage());
+        Assertions.assertEquals("L'employé de matricule M00001 existe déjà !", e.getMessage());
     }
 
     @Test
@@ -140,5 +137,16 @@ public class EmployeServiceTest {
         //When/Then
         EmployeException e = Assertions.assertThrows(EmployeException.class, () -> employeService.embaucheEmploye(nom, prenom, poste, niveauEtude, tempsPartiel));
         Assertions.assertEquals("Limite des 100000 matricules atteinte !", e.getMessage());
+    }
+
+    @Test
+    public void testCalculSalaireMoyen() throws Exception{
+        Mockito.when(employeRepository.count()).thenReturn(10l);
+        Mockito.when(employeRepository.sumSalaire()).thenReturn(10000d);
+        Mockito.when(employeRepository.sumTempsPartiel()).thenReturn(10d);
+
+        Double salaireMoyen = employeService.calculSalaireMoyenETP();
+
+        Assertions.assertEquals(salaireMoyen,1000d);
     }
 }

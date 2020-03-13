@@ -1,5 +1,7 @@
 package com.ipiecoles.java.java350.model;
 
+import com.ipiecoles.java.java350.exception.EmployeException;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -213,8 +215,16 @@ public class Employe {
         return tempsPartiel;
     }
 
-    public void setTempsPartiel(Double tempsPartiel) {
-        this.tempsPartiel = tempsPartiel;
+    public void setTempsPartiel(Double tempsPartiel) throws EmployeException {
+        Double ancienTempsPartiel = this.tempsPartiel;
+        if(tempsPartiel != null && tempsPartiel != 0.0){
+            this.salaire = salaire / ancienTempsPartiel;
+            this.tempsPartiel = tempsPartiel;
+            this.salaire = this.salaire * this.tempsPartiel;
+        } else {
+            throw new EmployeException("Temps partiel ne peut être nul.");
+        }
+        this.salaire = Math.round(salaire*100d)/100d;
     }
 
     @Override
