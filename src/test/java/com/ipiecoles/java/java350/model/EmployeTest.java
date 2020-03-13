@@ -129,13 +129,17 @@ public class EmployeTest {
 
     @ParameterizedTest
     @CsvSource({
-            "2019-12-31, 8",
-            "2021-12-31, 10",
-            "2022-12-31, 10",
-            "2032-12-31, 11"
+            "2019-12-31, 8,1",
+            "2021-12-31, 10,1",
+            "2022-12-31, 10,1",
+            "2032-12-31, 11,1",
+            "2019-12-31, 4,0.5",
+            "2021-12-31, 5,0.5",
+            "2022-12-31, 5,0.5",
+            "2032-12-31, 6,0.5"
     })
-    public void testNbRtt(LocalDate d, Integer rtt) {
-        Employe employe = new Employe("Doe", "John", "T12345", LocalDate.now(), 1500.0, 1, 1.0);
+    public void testNbRtt(LocalDate d, Integer rtt, Double tempsPartiel) {
+        Employe employe = new Employe("Doe", "John", "T12345", LocalDate.now(), 1500.0, 1, tempsPartiel);
         Assertions.assertEquals(employe.getNbRtt(d), rtt);
     }
 }
