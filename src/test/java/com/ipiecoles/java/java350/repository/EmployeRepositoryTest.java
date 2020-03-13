@@ -1,54 +1,59 @@
 package com.ipiecoles.java.java350.repository;
 
-
 import com.ipiecoles.java.java350.model.Employe;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import com.ipiecoles.java.java350.model.Entreprise;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import java.lang.reflect.Array;
 import java.time.LocalDate;
-import java.util.Arrays;
 
-@SuppressWarnings("CheckStyle")
-@ExtendWith(SpringExtension.class) //Junit 5
-@SpringBootTest //ou @DataJpaTest
+@DataJpaTest
 public class EmployeRepositoryTest {
 
     @Autowired
-    EmployeRepository employeRepository;
+    private EmployeRepository employeRepository;
 
     @BeforeEach
-    public void before() {
+    @AfterEach
+    public void setup(){
         employeRepository.deleteAll();
     }
 
     @Test
-    public void testFindLastMatricule() {
-//        given
+    public void testFindLastMatriculeEmpty(){
+        //Given
 
-//        when
+        //When
         String lastMatricule = employeRepository.findLastMatricule();
-//        then
-        Assertions.assertThat(lastMatricule).isNull();
+
+        //Then
+        Assertions.assertNull(lastMatricule);
     }
 
     @Test
-    public void testFindLastMatriculeEmployes() {
-//        given
-        Employe e1 = new Employe("Doe","John","T12345", LocalDate.now(),1500d,1,1.0);
-        Employe e2 = new Employe("Doe","Jane","C45678",LocalDate.now(),2500d,2,0.5);
-        Employe e3 = new Employe("Doe","Peter","M34567",LocalDate.now(),3500d,1,0.5);
+    public void testFindLastMatriculeSingle(){
+        //Given
+        employeRepository.save(new Employe("Doe", "John", "T12345", LocalDate.now(), Entreprise.SALAIRE_BASE, 1, 1.0));
 
-        employeRepository.saveAll(Arrays.asList(e1,e2,e3));
-//        when
+        //When
         String lastMatricule = employeRepository.findLastMatricule();
-//        then
-        Assertions.assertThat(lastMatricule).isEqualTo("45678");
+
+        //Then
+        Assertions.assertEquals("12345", lastMatricule);
     }
 
+    @Test
+    public void testFindLastMatriculeMultiple(){
+        //Given
+        employeRepository.save(new Employe("Doe", "John", "T12345", LocalDate.now(), Entreprise.SALAIRE_BASE, 1, 1.0));
+        employeRepository.save(new Employe("Doe", "Jane", "M40325", LocalDate.now(), Entreprise.SALAIRE_BASE, 1, 1.0));
+        employeRepository.save(new Employe("Doe", "Jim", "C06432", LocalDate.now(), Entreprise.SALAIRE_BASE, 1, 1.0));
+
+        //When
+        String lastMatricule = employeRepository.findLastMatricule();
+
+        //Then
+        Assertions.assertEquals("40325", lastMatricule);
+    }
 }

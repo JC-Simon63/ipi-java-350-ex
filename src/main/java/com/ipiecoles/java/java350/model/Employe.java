@@ -54,6 +54,18 @@ public class Employe {
         return Entreprise.NB_CONGES_BASE + this.getNombreAnneeAnciennete();
     }
 
+    /**
+     * Nombre de jours de RTT =
+     *   Nombre de jours dans l'année
+     * – plafond maximal du forfait jours de la convention collective
+     * – nombre de jours de repos hebdomadaires
+     * – jours de congés payés
+     * – nombre de jours fériés tombant un jour ouvré
+     *
+     * Au prorata de son pourcentage d'activité (arrondi au supérieur)
+     *
+     * @return le nombre de jours de RTT
+     */
     public Integer getNbRtt(){
         return getNbRtt(LocalDate.now());
     }
@@ -68,7 +80,7 @@ public class Employe {
             default: break;
         }
         int monInt = (int) Entreprise.joursFeries(d).stream().filter(localDate -> localDate.getDayOfWeek().getValue() <= DayOfWeek.FRIDAY.getValue()).count();
-        return (int) Math.ceil((i1 - Entreprise.NB_JOURS_MAX_FORFAIT - var - Entreprise.NB_CONGES_BASE - monInt) * tempsPartiel);
+        return (int) Math.ceil((i1 - Entreprise.NB_JOURS_MAX_FORFAIT - var - Entreprise.NB_CONGES_BASE - monInt));
     }
 
     /**
@@ -93,7 +105,7 @@ public class Employe {
             prime = Entreprise.primeAnnuelleBase() * Entreprise.INDICE_PRIME_MANAGER + primeAnciennete;
         }
         //Pour les autres employés en performance de base, uniquement la prime annuelle plus la prime d'ancienneté.
-        else if (this.performance == null || Entreprise.PERFORMANCE_BASE.equals(this.performance)){
+        else if (this.performance == null || Entreprise.PERFORMANCE_BASE == this.performance){
             prime = Entreprise.primeAnnuelleBase() + primeAnciennete;
         }
         //Pour les employés plus performance, on bonnifie la prime de base en multipliant par la performance de l'employé
@@ -104,6 +116,9 @@ public class Employe {
         //Au pro rata du temps partiel.
         return prime * this.tempsPartiel;
     }
+
+    //Augmenter salaire
+    //public void augmenterSalaire(double pourcentage){}
 
     public Long getId() {
         return id;
@@ -164,6 +179,7 @@ public class Employe {
 
     /**
      * @param dateEmbauche the dateEmbauche to set
+     * @throws Exception
      */
     public void setDateEmbauche(LocalDate dateEmbauche) {
         this.dateEmbauche = dateEmbauche;
@@ -195,8 +211,16 @@ public class Employe {
         return tempsPartiel;
     }
 
-    public void setTempsPartiel(Double tempsPartiel) {
-        this.tempsPartiel = tempsPartiel;
+    public void setTempsPartiel(Double tempsPartiel) throws EmployeException {
+        Double ancienTempsPartiel = this.tempsPartiel;
+        if(tempsPartiel != null && tempsPartiel != 0.0){
+            this.salaire = salaire / ancienTempsPartiel;
+            this.tempsPartiel = tempsPartiel;
+            this.salaire = this.salaire * this.tempsPartiel;
+        } else {
+            throw new EmployeException("Temps partiel ne peut être nul.");
+        }
+        this.salaire = Math.round(salaire*100d)/100d;
     }
 
     @Override
