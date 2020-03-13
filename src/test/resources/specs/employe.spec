@@ -14,8 +14,8 @@
 
 ## Calcul de la performance d'un commercial
 * Soit un employé appelé "Jane" "Doe" de matricule "C12345" et de performance "4"
-* Soit un employé appelé "John" "Doe" de matricule "C23456" et de performance "7"
-* Je calcule la nouvelle performance du commercial de matricule "C12345". Il possède une performance de "4" avec un CA traité de "10" et un objectif de "10".
+* Soit un employé appelé "John" "Doe" de matricule "C23456" et de performance "4"
+* Je calcule la nouvelle performance du commercial de matricule "C12345". Il a fait un CA traité de "10" et un objectif de "10".
 * Le commercial de matricule "C12345" obtiens bien une performance de "4".
 
 

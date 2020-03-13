@@ -48,10 +48,8 @@ public class EmployeAcceptanceTest {
         Assertions.assertEquals(nom, e.getNom());
     }
 
-    @Step("Je calcule la nouvelle performance du commercial de matricule <matricule>. Il possède une performance de <performance> avec un CA traité de <caTraite> et un objectif de <objectif>.")
-    public void calculPerformance(String matricule, Integer performance, Long caTraite, Long objectif) throws EmployeException {
-        Employe e = employeRepository.findByMatricule(matricule);
-        e.setPerformance(performance);
+    @Step("Je calcule la nouvelle performance du commercial de matricule <matricule>. Il a fait un CA traité de <caTraite> et un objectif de <objectif>.")
+    public void calculPerformance(String matricule, Long caTraite, Long objectif) throws EmployeException {
         employeService.calculPerformanceCommercial(matricule, caTraite, objectif);
     }
 
