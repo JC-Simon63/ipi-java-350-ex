@@ -71,4 +71,24 @@ public class EmployeServiceIntegrationTest {
         Assertions.assertEquals(employe, employeList.get(0));
     }
 
+    @Test
+    public void integrationCalculPerformanceCommercial() throws EmployeException{
+        employeRepository.save(new Employe("Doe", "John", "C12345", LocalDate.now(), Entreprise.SALAIRE_BASE, 4, 1.0));
+        Long caTraite = 9L;
+        Long objectifCa = 10L;
+
+        employeService.calculPerformanceCommercial("C12345", caTraite, objectifCa);
+        Employe employe = employeRepository.findByMatricule("C12345");
+        Assertions.assertEquals(employe.getPerformance(), 2);
+    }
+
+    @Test
+    public void integrationAvgPerformanceWhereMatriculeStartsWith(){
+        employeRepository.save(new Employe("Doe", "John", "C12345", LocalDate.now(), Entreprise.SALAIRE_BASE, 4, 1.0));
+        employeRepository.save(new Employe("Doe", "Jane", "C23456", LocalDate.now(), Entreprise.SALAIRE_BASE, 8, 1.0));
+
+        Double avgPerformance = employeRepository.avgPerformanceWhereMatriculeStartsWith("C");
+        Assertions.assertEquals(avgPerformance, 6);
+    }
+
 }
