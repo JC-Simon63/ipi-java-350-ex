@@ -1,5 +1,7 @@
 package com.ipiecoles.java.java350.model;
 
+import com.ipiecoles.java.java350.exception.EmployeException;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -71,7 +73,9 @@ public class Employe {
     }
 
     public Integer getNbRtt(LocalDate d){
-        int i1 = d.isLeapYear() ? 365 : 366;
+        // nb de jours dans l'année
+        int i1 = d.isLeapYear() ? 366 : 365;
+        // week-ends
         int var = 104;
         switch (LocalDate.of(d.getYear(),1,1).getDayOfWeek()){
             case THURSDAY: if(d.isLeapYear()) var =  var + 1; break;
@@ -79,6 +83,7 @@ public class Employe {
             case SATURDAY: var = var + 1; break;
             default: break;
         }
+        //
         int monInt = (int) Entreprise.joursFeries(d).stream().filter(localDate -> localDate.getDayOfWeek().getValue() <= DayOfWeek.FRIDAY.getValue()).count();
         return (int) Math.ceil((i1 - Entreprise.NB_JOURS_MAX_FORFAIT - var - Entreprise.NB_CONGES_BASE - monInt));
     }
@@ -117,8 +122,14 @@ public class Employe {
         return prime * this.tempsPartiel;
     }
 
-    //Augmenter salaire
-    //public void augmenterSalaire(double pourcentage){}
+
+    public void augmenterSalaire(double pourcentage) throws EmployeException{
+        if (pourcentage > 0.0 && pourcentage < 1.0) {
+            this.salaire = (double)Math.round(this.salaire + this.salaire * pourcentage);
+        } else {
+            throw new EmployeException("Augmentation non valide.");
+        }
+    }
 
     public Long getId() {
         return id;

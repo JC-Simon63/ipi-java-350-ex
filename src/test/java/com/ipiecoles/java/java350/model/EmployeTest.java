@@ -109,4 +109,33 @@ public class EmployeTest {
 
     }
 
+    @ParameterizedTest
+    @CsvSource({
+            "0.10, 1650.0",
+            "-0.10, ",
+            "0.0, ",
+            "1.0, "
+    })
+    public void testAugmenterSalaire(Double pourcentage, Double nvxSalaire) throws EmployeException{
+        Employe employe = new Employe("Doe", "John", "T12345", LocalDate.now(), 1500.0, 1, 1.0);
+        if (pourcentage > 0.0 && pourcentage < 1.0) {
+            employe.augmenterSalaire(pourcentage);
+            Assertions.assertEquals(employe.getSalaire(), nvxSalaire);
+        } else {
+            EmployeException e = Assertions.assertThrows(EmployeException.class, () -> employe.augmenterSalaire(pourcentage));
+            Assertions.assertEquals("Augmentation non valide.", e.getMessage());
+        }
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "2019-12-31, 8",
+            "2021-12-31, 10",
+            "2022-12-31, 10",
+            "2032-12-31, 11"
+    })
+    public void testNbRtt(LocalDate d, Integer rtt) {
+        Employe employe = new Employe("Doe", "John", "T12345", LocalDate.now(), 1500.0, 1, 1.0);
+        Assertions.assertEquals(employe.getNbRtt(d), rtt);
+    }
 }

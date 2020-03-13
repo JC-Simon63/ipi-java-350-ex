@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -28,6 +30,9 @@ public class EmployeServiceTest {
 
     @Mock
     EmployeRepository employeRepository;
+
+    @Mock
+    Employe employe;
 
     @BeforeEach
     public void setup(){
@@ -148,5 +153,60 @@ public class EmployeServiceTest {
         Double salaireMoyen = employeService.calculSalaireMoyenETP();
 
         Assertions.assertEquals(salaireMoyen,1000d);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "-1",
+            ","
+    })
+    public void testcalculPerformanceCommercialCaTrateDefect(Long caTraite){
+        EmployeException e = Assertions.assertThrows(EmployeException.class, () -> employeService.calculPerformanceCommercial("C12345", caTraite, 10000L));
+        Assertions.assertEquals("Le chiffre d'affaire traité ne peut être négatif ou null !", e.getMessage());
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "-1",
+            ","
+    })
+    public void testCalculPerformanceCommercialObjectifCaDefect(Long objectifCa){
+        EmployeException e = Assertions.assertThrows(EmployeException.class, () -> employeService.calculPerformanceCommercial("C12345", 10000L, objectifCa));
+        Assertions.assertEquals("L'objectif de chiffre d'affaire ne peut être négatif ou null !", e.getMessage());
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "T12345",
+            ","
+    })
+    public void testCalculPerformanceCommercialMatriculeDefect(String matricule) {
+        EmployeException e = Assertions.assertThrows(EmployeException.class, () -> employeService.calculPerformanceCommercial(matricule, 10000L, 10000L));
+        Assertions.assertEquals("Le matricule ne peut être null et doit commencer par un C !", e.getMessage());
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "9,10,1,1",
+            "9,10,4,2",
+            "10,10,1,1",
+            "10,10,4,4",
+            "106,100,1,2",
+            "12,10,1,2",
+            "13,10,5,10"
+    })
+    public void testCalculPerformanceCommercialPassant(Long caTraite, Long objectifCa, Integer performance, Integer nvllePerformance) throws EmployeException{
+        Employe employe = new Employe("Doe", "John", "C12345", LocalDate.now(), 1500.0, performance, 1.0);
+        Mockito.when(employeRepository.findByMatricule("C12345")).thenReturn(employe);
+//        Mockito.when(employe.getPerformance()).thenReturn(performance);
+        Mockito.when(employeRepository.avgPerformanceWhereMatriculeStartsWith("C")).thenReturn(4.0);
+
+
+        employeService.calculPerformanceCommercial("C12345", caTraite, objectifCa);
+
+        ArgumentCaptor<Employe> employeArgumentCaptor = ArgumentCaptor.forClass(Employe.class);
+        verify(employeRepository, times(1)).save(employeArgumentCaptor.capture());
+        Assertions.assertEquals(nvllePerformance, employeArgumentCaptor.getValue().getPerformance());
+
     }
 }
