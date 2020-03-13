@@ -1,5 +1,7 @@
 package com.ipiecoles.java.java350.model;
 
+import com.ipiecoles.java.java350.exception.EmployeException;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -71,16 +73,19 @@ public class Employe {
     }
 
     public Integer getNbRtt(LocalDate d){
-        int i1 = d.isLeapYear() ? 365 : 366;
-        int var = 104;
+        // nb de jours dans l'année
+        int nbJoursAnnee = d.isLeapYear() ? 366 : 365;
+        // week-ends
+        int nbJoursWeekEnd = 104;
         switch (LocalDate.of(d.getYear(),1,1).getDayOfWeek()){
-            case THURSDAY: if(d.isLeapYear()) var =  var + 1; break;
-            case FRIDAY: if(d.isLeapYear()) var =  var + 2; else var =  var + 1; break;
-            case SATURDAY: var = var + 1; break;
+            case THURSDAY: if(d.isLeapYear()) nbJoursWeekEnd =  nbJoursWeekEnd + 1; break;
+            case FRIDAY: if(d.isLeapYear()) nbJoursWeekEnd =  nbJoursWeekEnd + 2; else nbJoursWeekEnd =  nbJoursWeekEnd + 1; break;
+            case SATURDAY: nbJoursWeekEnd = nbJoursWeekEnd + 1; break;
             default: break;
         }
-        int monInt = (int) Entreprise.joursFeries(d).stream().filter(localDate -> localDate.getDayOfWeek().getValue() <= DayOfWeek.FRIDAY.getValue()).count();
-        return (int) Math.ceil((i1 - Entreprise.NB_JOURS_MAX_FORFAIT - var - Entreprise.NB_CONGES_BASE - monInt));
+        // calcul nombre jours fériés
+        int nbJoursFeries = (int) Entreprise.joursFeries(d).stream().filter(localDate -> localDate.getDayOfWeek().getValue() <= DayOfWeek.FRIDAY.getValue()).count();
+        return (int) Math.ceil((nbJoursAnnee - Entreprise.NB_JOURS_MAX_FORFAIT - nbJoursWeekEnd - Entreprise.NB_CONGES_BASE - nbJoursFeries)*tempsPartiel);
     }
 
     /**
@@ -105,7 +110,7 @@ public class Employe {
             prime = Entreprise.primeAnnuelleBase() * Entreprise.INDICE_PRIME_MANAGER + primeAnciennete;
         }
         //Pour les autres employés en performance de base, uniquement la prime annuelle plus la prime d'ancienneté.
-        else if (this.performance == null || Entreprise.PERFORMANCE_BASE == this.performance){
+        else if (this.performance == null || this.performance.equals(Entreprise.PERFORMANCE_BASE)){
             prime = Entreprise.primeAnnuelleBase() + primeAnciennete;
         }
         //Pour les employés plus performance, on bonnifie la prime de base en multipliant par la performance de l'employé
@@ -117,8 +122,14 @@ public class Employe {
         return prime * this.tempsPartiel;
     }
 
-    //Augmenter salaire
-    //public void augmenterSalaire(double pourcentage){}
+
+    public void augmenterSalaire(double pourcentage) throws EmployeException{
+        if (pourcentage > 0.0 && pourcentage < 1.0) {
+            this.salaire = (double)Math.round(this.salaire + this.salaire * pourcentage);
+        } else {
+            throw new EmployeException("Augmentation non valide.");
+        }
+    }
 
     public Long getId() {
         return id;

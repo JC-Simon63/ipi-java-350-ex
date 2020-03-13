@@ -1,5 +1,4 @@
 language: java
-<<<<<<< HEAD
 addons:
   sonarcloud:
     organization: "jc-simon63"

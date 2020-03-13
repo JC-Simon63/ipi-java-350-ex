@@ -40,3 +40,24 @@
 2020-03-12 16:50:35 - INFO  - Starting EmployeControllerTest on FR-L3356925 with PID 18908 (started by jean-christophe.simo in C:\GIT\ipi-java-350-ex)
 2020-03-12 16:50:35 - INFO  - No active profile set, falling back to default profiles: default
 2020-03-12 16:50:38 - INFO  - Started EmployeControllerTest in 3.984 seconds (JVM running for 6.293)
+2020-03-13 14:29:38 - INFO  - Starting Java350Application on FR-L3356925 with PID 11928 (C:\GIT\ipi-java-350-ex\target\classes started by jean-christophe.simo in C:\GIT\ipi-java-350-ex)
+2020-03-13 14:29:38 - INFO  - No active profile set, falling back to default profiles: default
+2020-03-13 14:29:44 - INFO  - Started Java350Application in 6.765 seconds (JVM running for 9.097)
+2020-03-13 14:30:28 - INFO  - Starting Java350Application on FR-L3356925 with PID 3828 (C:\GIT\ipi-java-350-ex\target\classes started by jean-christophe.simo in C:\GIT\ipi-java-350-ex)
+2020-03-13 14:30:28 - INFO  - No active profile set, falling back to default profiles: default
+2020-03-13 14:30:32 - INFO  - Started Java350Application in 5.09 seconds (JVM running for 7.484)
+2020-03-13 14:37:05 - INFO  - Starting EmployeControllerTest on FR-L3356925 with PID 13172 (started by jean-christophe.simo in C:\GIT\ipi-java-350-ex)
+2020-03-13 14:37:05 - INFO  - No active profile set, falling back to default profiles: default
+2020-03-13 14:37:08 - INFO  - Started EmployeControllerTest in 3.895 seconds (JVM running for 6.487)
+2020-03-13 14:42:53 - INFO  - Starting EmployeServiceIntegrationTest on FR-L3356925 with PID 1264 (started by jean-christophe.simo in C:\GIT\ipi-java-350-ex)
+2020-03-13 14:42:53 - INFO  - No active profile set, falling back to default profiles: default
+2020-03-13 14:43:03 - INFO  - Started EmployeServiceIntegrationTest in 11.106 seconds (JVM running for 13.961)
+2020-03-13 14:55:25 - INFO  - Starting EmployeServiceIntegrationTest on FR-L3356925 with PID 22004 (started by jean-christophe.simo in C:\GIT\ipi-java-350-ex)
+2020-03-13 14:55:25 - INFO  - No active profile set, falling back to default profiles: default
+2020-03-13 14:55:34 - INFO  - Started EmployeServiceIntegrationTest in 10.169 seconds (JVM running for 12.83)
+2020-03-13 14:56:15 - INFO  - Starting EmployeServiceIntegrationTest on FR-L3356925 with PID 2188 (started by jean-christophe.simo in C:\GIT\ipi-java-350-ex)
+2020-03-13 14:56:15 - INFO  - No active profile set, falling back to default profiles: default
+2020-03-13 14:56:23 - INFO  - Started EmployeServiceIntegrationTest in 8.988 seconds (JVM running for 11.562)
+2020-03-13 14:57:20 - INFO  - Starting EmployeServiceIntegrationTest on FR-L3356925 with PID 20944 (started by jean-christophe.simo in C:\GIT\ipi-java-350-ex)
+2020-03-13 14:57:20 - INFO  - No active profile set, falling back to default profiles: default
+2020-03-13 14:57:28 - INFO  - Started EmployeServiceIntegrationTest in 9.466 seconds (JVM running for 11.909)

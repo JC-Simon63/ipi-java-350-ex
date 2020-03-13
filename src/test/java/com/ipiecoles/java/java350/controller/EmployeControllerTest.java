@@ -38,7 +38,7 @@ public class EmployeControllerTest {
 //        then
         result.andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json("{'id': 5, 'nom': 'Doe', 'prenom': 'John', 'matricule': 'T00001', " +
-                                                                            "'dateEmbauche': '2020-03-12', 'salaire': 1500.0, 'performance': 1, 'tempsPartiel': 1.0}"));
+                                                                            "'dateEmbauche': '"+LocalDate.now()+"', 'salaire': 1500.0, 'performance': 1, 'tempsPartiel': 1.0}"));
     }
 
     @Test
